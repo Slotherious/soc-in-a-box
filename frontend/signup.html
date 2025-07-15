@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up – SOC in a Box</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Create Account</h2>
+    <form id="signupForm">
+      <input type="text" id="username" placeholder="👤 Username" required>
+      <input type="password" id="password" placeholder="🔐 Password" required>
+      <button type="submit">📝 Sign Up</button>
+    </form>
+    <p class="note">Already have an account? <a href="index.html">Login</a></p>
+  </div>
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const data = {
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value
+      };
+
+      fetch('http://<WINDOWS-IP>:5000/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(res => alert(res.message))
+      .catch(err => alert("Error: " + err));
+    });
+  </script>
+</body>
+</html>
