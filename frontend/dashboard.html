@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Transaction – SOC in a Box</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Transaction Form</h2>
+    <form id="txnForm">
+      <select id="type">
+        <option value="buy">Buy</option>
+        <option value="sell">Sell</option>
+      </select>
+      <input type="number" id="amount" placeholder="💰 Amount" required>
+      <input type="text" id="note" placeholder="📝 Note" required>
+      <button type="submit">💼 Submit Transaction</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('txnForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const data = {
+        type: document.getElementById('type').value,
+        amount: document.getElementById('amount').value,
+        note: document.getElementById('note').value
+      };
+
+      fetch('http://<WINDOWS-IP>:5000/transaction', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(res => alert(res.message))
+      .catch(err => alert("Error: " + err));
+    });
+  </script>
+</body>
+</html>
